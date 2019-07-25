@@ -1,9 +1,15 @@
-import mongoose from "mongoose";
+import * as dotenv from "dotenv";
+import mongoose, { DeepPartial, Document } from "mongoose";
 import request from "supertest";
 import {app} from "../../../../src/bootstrap";
+import User from "../../../../src/Auth/Models/User";
 
 describe("Test/Api/Auth/SignupControllerTest", (): void => 
 {
+    before(() => {
+        dotenv.config();
+    });
+
     describe("#register", (): void => 
     {
         it("Should register an user", (): request.Test =>
@@ -15,6 +21,23 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
                     password: "p34k3dbyy0u"
                 })
                 .expect(200));
+
+        it("Should return error if e-mail is already registered", async () => 
+        {
+            const data = {
+                name: "Vinicius Guedes",
+                email: "viniciusgued@gmail.com",
+                password: "p3ak3dbyy0u"
+            }
+            await new User(data as DeepPartial<Document>).save();
+
+            return request(app)
+                .post("/api/auth/sign_up")
+                .send(data)
+                .expect(400, {
+                    "message": "E-mail is already registered"
+                });
+        });
     });
 
     afterEach((): Promise<void> => mongoose.connection.dropDatabase());
