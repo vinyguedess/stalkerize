@@ -1,0 +1,75 @@
+{
+  "name": "peakerfy",
+  "description": "CRM app for small and medium companies",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.4.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/chai": "^4.1.7",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/mocha": "^5.2.7",
+    "@types/mongoose": "^5.5.9",
+    "@types/node": "^12.0.4",
+    "@types/sinon": "^7.0.12",
+    "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "husky": "^2.0.0",
+    "lint-staged": "^8.1.5",
+    "mocha": "^6.1.4",
+    "nyc": "^14.0.0",
+    "sinon": "^7.3.2",
+    "supertest": "^4.0.2",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./node_modules/.bin/lint-staged"
+    }
+  },
+  "nyc": {
+    "all": true,
+    "exclude": [
+      ".nyc_output",
+      "app",
+      "coverage",
+      "node_modules",
+      "src/server.ts",
+      "test"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text"
+    ]
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/babel src -d app --extensions .ts",
+    "dev": "nodemon",
+    "lint": "./node_modules/.bin/eslint src/ --fix --ext .ts",
+    "test": "ENV=test ./node_modules/.bin/nyc ./node_modules/.bin/mocha",
+    "start": "node app/server.js"
+  }
+}

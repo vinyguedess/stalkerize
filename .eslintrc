@@ -1,0 +1,62 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true,
+      "legacyDecorators": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "@typescript-eslint/interface-name-prefix": ["error", "always"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "array-bracket-newline": [
+      "error",
+      {
+        "multiline": true
+      }
+    ],
+    "array-bracket-spacing": ["error", "never"],
+    "block-spacing": ["error", "always"],
+    "brace-style": [
+      "error",
+      "allman",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "comma-dangle": ["error", "never"],
+    "comma-style": ["error", "last"],
+    "constructor-super": "error",
+    "curly": ["error", "multi-or-nest"],
+    "indent": ["error", 4],
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "no-console": "off",
+    "object-curly-spacing": ["error", "never"],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      }
+    ],
+    "semi-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ]
+  }
+}
