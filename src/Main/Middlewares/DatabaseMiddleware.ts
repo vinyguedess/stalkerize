@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {Request, Response} from "express";
 
-const getURLConnection = (): string => 
+export const getURLConnection = (): string => 
 {
     let {DB_HOST, DB_NAME, DB_USER, DB_PASS, ENV} = process.env;
     if (ENV === "test") DB_NAME += "_test";

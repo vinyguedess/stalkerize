@@ -3,12 +3,14 @@ import mongoose, { DeepPartial, Document } from "mongoose";
 import request from "supertest";
 import {app} from "../../../../src/bootstrap";
 import User from "../../../../src/Auth/Models/User";
+import { getURLConnection } from "../../../../src/Main/Middlewares/DatabaseMiddleware";
 
 describe("Test/Api/Auth/SignupControllerTest", (): void => 
 {
     before(() => {
         dotenv.config();
-    });
+        return mongoose.connect(getURLConnection(), {useNewUrlParser: true});
+    })
 
     describe("#register", (): void => 
     {
