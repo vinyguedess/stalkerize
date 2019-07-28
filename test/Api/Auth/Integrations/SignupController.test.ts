@@ -50,8 +50,9 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
             return request(app)
                 .post("/api/auth/sign_up")
                 .send(data)
-                .expect(400, {
-                    "message": "E-mail is already registered"
+                .expect(403, {
+                    "message": "Problems persisting user",
+                    "errors": {}
                 });
         });
     });

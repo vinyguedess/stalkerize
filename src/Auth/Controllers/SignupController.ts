@@ -1,8 +1,8 @@
-import {hashSync} from "bcrypt";
 import {Request, Response} from "express";
-import User from "../Models/User";
 import LoginService from "../Services/LoginService";
+import SignupService from "../Services/SignupService";
 import ValidatorService from "../../Main/Services/ValidatorService";
+
 
 export const register = (request: Request, response: Response) =>
 {
@@ -17,29 +17,15 @@ export const register = (request: Request, response: Response) =>
             errors: validatorService.getErrors()
         });
 
-    return User.countDocuments({email: request.body.email}).then(
-        (totalUsers: number) => 
-        {
-            if (totalUsers > 0) 
-            {
-                return response.status(400).json({
-                    message: "E-mail is already registered"
-                });
-            }
-
-            const data = {
-                ...request.body,
-                password: hashSync(request.body.password, 8)
-            };
-
-            const user = new User(data);
-
-            return user.save().then(() => 
-            {
-                const loginService: LoginService = new LoginService();
-
-                return response.status(200).json(loginService.login(user));
+    const signupService: SignupService = new SignupService();
+    return signupService.register(request.body).then(user => {
+        if (!user)
+            return response.status(403).json({
+                message: "Problems persisting user",
+                errors: signupService.getErrors()
             });
-        }
-    );
+
+        const loginService: LoginService = new LoginService();
+        return response.status(200).json(loginService.login(user));
+    })
 }
