@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ValidatorService } from "../../../../src/Main/Services/ValidatorService";
+import ValidatorService from "../../../../src/Main/Services/ValidatorService";
 
 
 describe("Test/Api/Main/Unit/Services/ValidatorServiceTest", (): void => {

@@ -2,9 +2,22 @@ import {hashSync} from "bcrypt";
 import {Request, Response} from "express";
 import User from "../Models/User";
 import LoginService from "../Services/LoginService";
+import ValidatorService from "../../Main/Services/ValidatorService";
 
 export const register = (request: Request, response: Response) =>
-    User.countDocuments({email: request.body.email}).then(
+{
+    const validatorService: ValidatorService = ValidatorService.handle({
+        name: ["required"],
+        email: ["required"],
+        password: ["required", "min:6", "max:16"]
+    })
+    if (validatorService.check(request.body).hasErrors())
+        return response.status(400).json({
+            message: "invalid fields",
+            errors: validatorService.getErrors()
+        });
+
+    return User.countDocuments({email: request.body.email}).then(
         (totalUsers: number) => 
         {
             if (totalUsers > 0) 
@@ -29,3 +42,4 @@ export const register = (request: Request, response: Response) =>
             });
         }
     );
+}

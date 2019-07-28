@@ -1,7 +1,7 @@
 import BaseService from "./BaseService";
 
 
-export class ValidatorService extends BaseService
+export default class ValidatorService extends BaseService
 {
 
     private validationMap:any;

@@ -24,6 +24,20 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
                 })
                 .expect(200));
 
+        it("Should return error if invalid fields", (): request.Test => 
+            request(app)
+                .post("/api/auth/sign_up")
+                .send({
+                    email: "viniciusgued@gmail.com",
+                    password: "p3ak3dbyy0u"
+                })
+                .expect(400, {
+                    "message": "invalid fields",
+                    "errors": {
+                        "name": ["is required"]
+                    }
+                }))
+
         it("Should return error if e-mail is already registered", async () => 
         {
             const data = {
