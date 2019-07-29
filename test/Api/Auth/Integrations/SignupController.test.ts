@@ -32,7 +32,7 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
                     password: "p3ak3dbyy0u"
                 })
                 .expect(400, {
-                    "message": "invalid fields",
+                    "message": "invalid request",
                     "errors": {
                         "name": ["is required"]
                     }
