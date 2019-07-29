@@ -1,8 +1,10 @@
 # App files and folders
+.env
 .nyc_output
 app
 coverage
 node_modules
+yarn-error.log
 
 # OS and IDE files and folders
 .idea

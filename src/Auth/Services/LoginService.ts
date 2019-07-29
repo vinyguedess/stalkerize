@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import IAuthTokens from "../Interfaces/IAuthTokens";
+import User from "../Models/User";
+
 
 export default class LoginService 
 {
@@ -14,4 +16,18 @@ export default class LoginService
             )
         };
     }
+
+    public check(accessToken:string) {
+        const payload = jwt.decode(accessToken) as any;
+        console.log(accessToken, payload);
+        return User.findById(payload.id).then(user => {
+            console.log(user)
+            return User.find().then(users => {
+                console.log(users);
+
+                return user;
+            })
+        });
+    }
+
 }

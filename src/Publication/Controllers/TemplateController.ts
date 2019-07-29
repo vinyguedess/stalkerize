@@ -1,14 +1,15 @@
-import {Request, Response} from "express";
+import {Response} from "express";
+import IRequest from "../../Main/Interfaces/IRequest";
 import Template from "../Models/Template";
 import * as ValidatorMiddleware from "../../Main/Middlewares/ValidatorMiddleware";
 
 export const register: Array<
-(request: Request, response: Response, next?: any) => any
+(request: IRequest, response: Response, next?: any) => any
 > = [
     ValidatorMiddleware.handle({
         text: ["required", "max:1200", "min:100"]
     }),
-    (request: Request, response: Response) => 
+    (request: IRequest, response: Response) => 
     {
         const template = new Template(request.body);
 
@@ -24,3 +25,8 @@ export const register: Array<
         });
     }
 ];
+
+
+export const list = (request: IRequest, response: Response) => {
+    return response.json([]);
+}

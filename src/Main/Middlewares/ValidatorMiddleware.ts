@@ -13,8 +13,6 @@ export const handle = (
         );
         if (validatorService.check(request[verify]).hasErrors()) 
         {
-            console.log(request.body, validatorService.getErrors());
-
             return response.status(400).json({
                 message: "invalid request",
                 errors: validatorService.getErrors()
