@@ -65,6 +65,9 @@
       "html",
       "lcov",
       "text"
+    ],
+    "require": [
+      "ts-node/register"
     ]
   },
   "scripts": {
