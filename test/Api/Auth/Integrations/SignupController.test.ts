@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import mongoose, { DeepPartial, Document } from "mongoose";
 import request from "supertest";
+import * as UserProvider from "../../../DataProvider/UserProvider";
 import {app} from "../../../../src/bootstrap";
 import User from "../../../../src/Auth/Models/User";
 import { getURLConnection } from "../../../../src/Main/Middlewares/DatabaseMiddleware";
@@ -20,7 +21,8 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
                 .send({
                     name: "Vinicius Guedes",
                     email: "viniciusgued@gmail.com",
-                    password: "p34k3dbyy0u"
+                    password: "p34k3dbyy0u",
+                    organization: "Stalkerize"
                 })
                 .expect(200));
 
@@ -34,22 +36,28 @@ describe("Test/Api/Auth/SignupControllerTest", (): void =>
                 .expect(400, {
                     "message": "invalid request",
                     "errors": {
-                        "name": ["is required"]
+                        "name": ["is required"],
+                        "organization": ["is required"]
                     }
                 }))
 
         it("Should return error if e-mail is already registered", async () => 
         {
+            const organization = await UserProvider.getOrganization();
             const data = {
                 name: "Vinicius Guedes",
                 email: "viniciusgued@gmail.com",
-                password: "p3ak3dbyy0u"
+                password: "p3ak3dbyy0u",
+                organization: organization._id
             }
             await new User(data as DeepPartial<Document>).save();
 
             return request(app)
                 .post("/api/auth/sign_up")
-                .send(data)
+                .send({
+                    ...data,
+                    organization: organization.name
+                })
                 .expect(403, {
                     "message": "Problems persisting user",
                     "errors": {}

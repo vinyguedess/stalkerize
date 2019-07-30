@@ -8,7 +8,8 @@ export const register = [
 	ValidatorMiddleware.handle({
         name: ["required"],
         email: ["required"],
-        password: ["required", "min:6", "max:16"]
+        password: ["required", "min:6", "max:16"],
+        organization: ["required", "min:3", "max:50"]
 	}),
     (request: Request, response: Response) =>
     {

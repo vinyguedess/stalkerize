@@ -16,7 +16,8 @@ describe("Test/Api/Auth/Unit/Services/SignupServiceTest", (): void => {
             const data = {
                 name: "Vinicius Guedes",
                 email: "viniciusgued@gmail.com",
-                password: "123@321456"
+                password: "123@321456",
+                organization: "Stalkerize"
             }
 
             const service: SignupService = new SignupService();
@@ -34,7 +35,8 @@ describe("Test/Api/Auth/Unit/Services/SignupServiceTest", (): void => {
             const data = {
                 name: "Vinicius Guedes",
                 email: "viniciusgued@gmail.com",
-                password: "109283091283"
+                password: "109283091283",
+                organization: "Stalkerize"
             }
 
             const service: SignupService = new SignupService();

@@ -14,6 +14,10 @@ const schema: Schema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    organization: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 });
 
