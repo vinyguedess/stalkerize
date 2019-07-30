@@ -29,6 +29,10 @@ export const register: Array<
 ];
 
 
-export const list = (request: IRequest, response: Response) => {
-    return response.json([]);
-}
+export const list = (request: IRequest, response: Response) => 
+    Promise.all([
+        Template.find(),
+        Template.countDocuments()
+    ]).then(([templates, total]) => response.header({
+        "X-Total-Count": total
+    }).json(templates))
