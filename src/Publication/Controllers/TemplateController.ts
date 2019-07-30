@@ -11,8 +11,10 @@ export const register: Array<
     }),
     (request: IRequest, response: Response) => 
     {
-        const template = new Template(request.body);
+        const data = request.body;
+        data.author = request.user._id;
 
+        const template = new Template(data);
         return template.save().then(() => 
         {
             return response

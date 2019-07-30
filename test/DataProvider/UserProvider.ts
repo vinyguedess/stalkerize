@@ -8,7 +8,7 @@ const data: any = {};
 
 export const get = async (): Promise<IUser> => 
 {
-    if (!data.user) 
+    if (!data.user || await User.countDocuments() <= 0) 
     {
         data.user = new User({
             name: "Vinicius Guedes",

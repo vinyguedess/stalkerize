@@ -5,6 +5,10 @@ const schema: Schema = new Schema({
     text: {
         type: String,
         required: true
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 });
 
