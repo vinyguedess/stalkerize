@@ -27,22 +27,10 @@ export default class ValidatorService extends BaseService
                     this.addError(field, "is required");
 
                 if (/min:[0-9]+/.test(rule))
-                {
-                    const [,minValue] = rule.split(":");
-                    if (typeof value === "string" && value.length < minValue)
-                        this.addError(field, `should have at least ${minValue} characters`);
-                    else if (typeof value === "number" && value < minValue)
-                        this.addError(field, `should be at least ${minValue}`);
-                }
+                    this.checkOverMinValue(rule, field, value);
 
                 if (/max:[0-9]+/.test(rule))
-                {
-                    const [,maxValue] = rule.split(":");
-                    if (typeof value === "string" && value.length > maxValue)
-                        this.addError(field, `should have at most ${maxValue} characters`);
-                    else if (typeof value === "number" && value > maxValue)
-                        this.addError(field, `should be at most ${maxValue}`);
-                }
+                    this.checkUnderMaxValue(rule, field, value);
             })            
         });
 
@@ -51,10 +39,28 @@ export default class ValidatorService extends BaseService
 
     private getValue(objectToBeChecked: any, field: string, defaultValue: any = null): any
     {
-        if (typeof objectToBeChecked[field] !== "undefined")
+        if (typeof objectToBeChecked[field] === "undefined")
             return defaultValue;
             
         return objectToBeChecked[field]
+    }
+
+    private checkOverMinValue(rule:string, field: string, value: any): void
+    {
+        const [,minValue] = rule.split(":");
+        if (typeof value === "string" && value.length < parseInt(minValue))
+            this.addError(field, `should have at least ${minValue} characters`);
+        else if (typeof value === "number" && value < parseInt(minValue))
+            this.addError(field, `should be at least ${minValue}`);
+    }
+
+    private checkUnderMaxValue(rule: string, field: string, value: any): void
+    {
+        const [,maxValue] = rule.split(":");
+        if (typeof value === "string" && value.length > parseInt(maxValue))
+            this.addError(field, `should have at most ${maxValue} characters`);
+        else if (typeof value === "number" && value > parseInt(maxValue))
+            this.addError(field, `should be at most ${maxValue}`);
     }
 
 }
