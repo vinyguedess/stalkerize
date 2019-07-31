@@ -20,7 +20,7 @@ export default class ValidatorService extends BaseService
     public check(objectToBeChecked: any): ValidatorService
     {
         Object.keys(this.validationMap).forEach(field => {
-            const value: any = typeof objectToBeChecked[field] !== "undefined" ? objectToBeChecked[field] : null;
+            const value: any = this.getValue(objectToBeChecked, field);
 
             this.validationMap[field].map(rule => {
                 if (rule.indexOf("required") >= 0 && !value)
@@ -47,6 +47,14 @@ export default class ValidatorService extends BaseService
         });
 
         return this;
+    }
+
+    private getValue(objectToBeChecked: any, field: string, defaultValue: any = null): any
+    {
+        if (typeof objectToBeChecked[field] !== "undefined")
+            return defaultValue;
+            
+        return objectToBeChecked[field]
     }
 
 }
